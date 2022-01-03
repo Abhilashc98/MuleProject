@@ -36,11 +36,27 @@
 							<artifactId>mysql-connector-java</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+				<cloudHubDeployment>
+				<username>abhilash_abhi33</username>
+				<environment>Sandbox</environment>
+				<workers>1</workers>
+				<workerType>Micro</workerType>
+				<applicationName>Git-jenkins-pipeline</applicationName>
+				<password>Abhilashc@115996</password>
+				<muleVersion>4.1.4</muleVersion>
+				
+				
+				
+				</cloudHubDeployment>
 				    
 				</configuration>
 			</plugin>
 		</plugins>
+		
 	</build>
+	
+	
+	
 
 	<dependencies>
 		<dependency>
@@ -64,9 +80,12 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			
 			<version>8.0.21</version>
 		</dependency>
 	</dependencies>
+	
+	
 
 	<repositories>
 		<repository>
