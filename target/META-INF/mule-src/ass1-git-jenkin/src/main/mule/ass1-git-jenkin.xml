@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="81dfe403-f804-4de7-8751-f8e8f0f20543" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="b32f4956-6135-45c8-bc3e-3139508cabce" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="115996" database="employees" />
+	</db:config>
+	<flow name="Copy_of_Retrieval-flow" doc:id="1182b440-7b63-4500-9a01-b22cdfb0cf1e" >
+		<http:listener doc:name="Listener" doc:id="0bb37416-efb7-40a2-b4e4-44ab4487f928" config-ref="HTTP_Listener_config" path="/retrieve/{EmpId}"/>
+		<set-variable value="#[attributes.uriParams.'EmpId']" doc:name="Set Variable" doc:id="0281c78e-3a0e-4033-989e-e405f8047734" variableName="EmpId" />
+		<db:select doc:name="Select" doc:id="9a5cc99d-60cd-4f4c-8156-77f380f5a084" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from EmployeeDetails where EmpId = :Id;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	"Id" : vars.EmpId
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="525e2941-9ab5-4ab7-ac35-5aca834d6e55" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
