@@ -43,11 +43,13 @@
 				<workerType>Micro</workerType>
 				<applicationName>Git-jenkins-pipeline</applicationName>
 				<password>Abhilashc@115996</password>
-				<muleVersion>4.1.4</muleVersion>
+				<muleVersion>4.4.0</muleVersion>
+				<objectStoreV2>true</objectStoreV2>
 				
 				
 				
-				</cloudHubDeployment>
+				</cloudHubDeployment
+				>
 				    
 				</configuration>
 			</plugin>
